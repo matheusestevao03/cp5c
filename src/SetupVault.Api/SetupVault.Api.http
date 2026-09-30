@@ -1,0 +1,115 @@
+@baseUrl = http://localhost:5080/api/v1
+
+### ===== FABRICANTES =====
+
+### Criar fabricante (201)
+POST {{baseUrl}}/fabricantes
+Content-Type: application/json
+
+{
+  "nome": "Artisan",
+  "paisOrigem": "Japão",
+  "siteOficial": "https://www.artisan-jp.com"
+}
+
+### Criar fabricante com dados inválidos (400)
+POST {{baseUrl}}/fabricantes
+Content-Type: application/json
+
+{
+  "nome": "",
+  "paisOrigem": "",
+  "siteOficial": "site-invalido"
+}
+
+### Criar fabricante com nome duplicado (409)
+POST {{baseUrl}}/fabricantes
+Content-Type: application/json
+
+{
+  "nome": "artisan",
+  "paisOrigem": "Japão"
+}
+
+### Listar fabricantes (200)
+GET {{baseUrl}}/fabricantes
+
+### Buscar fabricante por id (200)
+GET {{baseUrl}}/fabricantes/1
+
+### Buscar fabricante inexistente (404)
+GET {{baseUrl}}/fabricantes/999
+
+### Atualizar fabricante (200)
+PUT {{baseUrl}}/fabricantes/1
+Content-Type: application/json
+
+{
+  "nome": "Artisan",
+  "paisOrigem": "Japão",
+  "siteOficial": "https://www.artisan-jp.com/fx-hayate-otsu-eng.html"
+}
+
+### Listar periféricos de um fabricante (200)
+GET {{baseUrl}}/fabricantes/1/perifericos
+
+### ===== PERIFÉRICOS =====
+
+### Criar periférico (201)
+POST {{baseUrl}}/perifericos
+Content-Type: application/json
+
+{
+  "nome": "Hayate Otsu XL",
+  "descricao": "Mousepad de tecido, base de poron, foco em velocidade.",
+  "tipo": "Mousepad",
+  "preco": 389.90,
+  "estoque": 15,
+  "fabricanteId": 1
+}
+
+### Criar periférico com fabricante inexistente (400)
+POST {{baseUrl}}/perifericos
+Content-Type: application/json
+
+{
+  "nome": "Zero Soft L",
+  "tipo": "Mousepad",
+  "preco": 299.90,
+  "estoque": 5,
+  "fabricanteId": 999
+}
+
+### Listar periféricos (200)
+GET {{baseUrl}}/perifericos
+
+### Filtrar por tipo e fabricante (200)
+GET {{baseUrl}}/perifericos?tipo=Mousepad&fabricanteId=1
+
+### Buscar periférico por id (200)
+GET {{baseUrl}}/perifericos/1
+
+### Atualizar periférico (200)
+PUT {{baseUrl}}/perifericos/1
+Content-Type: application/json
+
+{
+  "nome": "Hayate Otsu XL",
+  "descricao": "Mousepad de tecido, base de poron, foco em velocidade.",
+  "tipo": "Mousepad",
+  "preco": 359.90,
+  "estoque": 12,
+  "fabricanteId": 1
+}
+
+### Tentar excluir fabricante com periféricos (409)
+DELETE {{baseUrl}}/fabricantes/1
+
+### Excluir periférico (204)
+DELETE {{baseUrl}}/perifericos/1
+
+### Excluir periférico inexistente (404)
+DELETE {{baseUrl}}/perifericos/1
+
+### Excluir fabricante (204)
+DELETE {{baseUrl}}/fabricantes/1
